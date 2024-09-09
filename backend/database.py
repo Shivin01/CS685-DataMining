@@ -1,14 +1,10 @@
-import json
-
+from config import DB_NAME, DB_PASS, DB_URI, DB_USER
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-with open("config.json", "r") as f:
-    config = json.load(f)
-
 # Database URL (use environment variables or config file for real-world projects)
-SQLALCHEMY_DATABASE_URL = f"postgresql://{config['DB_USER']}:{config['DB_PASS']}@{config['DB_URI']}/{config['DB_NAME']}"
+SQLALCHEMY_DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_URI}/{DB_NAME}"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
