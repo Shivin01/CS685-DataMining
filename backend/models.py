@@ -27,8 +27,11 @@ class Video(Base):
     updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
     video_title = Column(String, nullable=False)
     video_url = Column(String, nullable=False)
+    is_real = Column(Boolean, nullable=False)
+    original_id = Column(Integer, ForeignKey("videos.video_id"), nullable=True)
 
     responses = relationship("UserResponse", back_populates="video")
+    original_video = relationship("Video", remote_side=[video_id])
 
 
 class UserResponse(Base):
