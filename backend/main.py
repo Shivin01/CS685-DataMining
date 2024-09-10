@@ -1,10 +1,11 @@
 from database import Base, engine
 from fastapi import Depends, FastAPI
 from fastapi.security import OAuth2PasswordBearer
-from routers import auth
+from routers import auth, videos
 
 app = FastAPI()
 app.include_router(auth.router)
+app.include_router(videos.router)
 
 # Create database tables
 Base.metadata.create_all(bind=engine)

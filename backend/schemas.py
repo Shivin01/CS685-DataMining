@@ -19,9 +19,15 @@ class UserCreate(BaseModel):
         return value
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+
+class SubmitResponse(BaseModel):
+    video_id: int
+    is_real: bool
+    reason: str | None = None
