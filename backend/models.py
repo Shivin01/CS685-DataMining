@@ -13,8 +13,8 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     password_hash = Column(String, nullable=False)
     age = Column(Integer, nullable=False)
-    department = Column(String, nullable=False)
-    branch = Column(String, nullable=False)
+    department = Column(String, nullable=True)
+    branch = Column(String, nullable=True)
 
     responses = relationship("UserResponse", back_populates="user")
 
