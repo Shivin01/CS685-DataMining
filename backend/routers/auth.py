@@ -15,8 +15,8 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-@router.post("/signup", response_model=UserCreate)
-def create_user(user: UserCreate, db: Session = Depends(get_db)) -> User:
+@router.post("/signup")
+def create_user(user: UserCreate, db: Session = Depends(get_db)):
     db_user: User | None = db.query(User).filter(User.email == user.email).first()
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
@@ -35,7 +35,14 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)) -> User:
     db.refresh(new_user)
 
     access_token: str = create_access_token(data={"email": new_user.email})
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "email": new_user.email,
+        "age": new_user.age,
+        "department": new_user.department,
+        "branch": new_user.branch,
+    }
 
 
 @router.post("/login")
