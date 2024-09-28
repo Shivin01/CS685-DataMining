@@ -18,9 +18,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # Database connection details
-DB_USER = "yuvraj"
-DB_PASS = "password"
-DB_URI = "localhost"
+DB_USER = "postgres"
+DB_PASS = "postgres"
+DB_URI = "0.0.0.0"
 DB_NAME = "deepfake_db"
 
 # Set up logging
@@ -93,6 +93,7 @@ def process_files(input_path):
 
     # Look for metadata file
     metadata_path = find_metadata(folder_path)
+    print(metadata_path)
     if not os.path.exists(metadata_path):
         logging.error("Metadata file not found.")
         return
@@ -119,5 +120,6 @@ def process_files(input_path):
 
 
 if __name__ == "__main__":
-    input_path = input("Enter the path to the folder or zip file: ")
+    # input_path = input("Enter the path to the folder or zip file: ")
+    input_path = "./selected_videos"
     process_files(input_path)

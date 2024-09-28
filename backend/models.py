@@ -12,10 +12,9 @@ class User(Base):
     updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
     email = Column(String, unique=True, index=True, nullable=False)
     password_hash = Column(String, nullable=False)
-    age = Column(Integer, nullable=False)
+    age = Column(Integer, nullable=True)
     department = Column(String, nullable=True)
     branch = Column(String, nullable=True)
-
     responses = relationship("UserResponse", back_populates="user")
 
 

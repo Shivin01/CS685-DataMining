@@ -28,7 +28,6 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
         department=user.department,
         branch=user.branch,
     )
-
     # Add and commit the new user to the database
     db.add(new_user)
     db.commit()
@@ -42,16 +41,28 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
         "age": new_user.age,
         "department": new_user.department,
         "branch": new_user.branch,
+        "id": new_user.user_id
     }
 
 
 @router.post("/login")
 def login(
-    form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
+        form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
 ):
+    print(form_data)
     user = db.query(User).filter(User.email == form_data.username).first()
+    print(user)
     if not user or not pwd_context.verify(form_data.password, user.password_hash):
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
     access_token = create_access_token(data={"email": user.email})
-    return {"access_token": access_token, "token_type": "bearer"}
+    print(access_token)
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "email": user.email,
+        "age": user.age,
+        "department": user.department,
+        "branch": user.branch,
+        "id": user.user_id
+    }

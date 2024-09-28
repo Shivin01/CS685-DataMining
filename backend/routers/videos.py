@@ -6,7 +6,7 @@ from models import User, UserResponse, Video
 from schemas import SubmitResponse
 from sqlalchemy.orm import Session
 
-router = APIRouter(tags=["videos"])
+router = APIRouter(prefix="/videos", tags=["videos"])
 
 
 @router.get("/get-next-video")
