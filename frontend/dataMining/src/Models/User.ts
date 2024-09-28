@@ -1,12 +1,14 @@
 export type UserProfileToken = {
-    user: string
-    expires_at: number
     id: number
-    refresh_token: string
-    token: string
-    training: boolean
+    email: string,
+    access_token: string,
+    age: number,
+    department: string,
+    branch: string
+
 }
 
 export type UserProfile = {
-    email: string
+    email: string,
+    id: string
 }

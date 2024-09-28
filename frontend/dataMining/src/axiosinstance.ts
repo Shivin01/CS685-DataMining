@@ -5,7 +5,7 @@ export const getAxiosInstance = () => {
     const axiosInstance: AxiosInstance = axios.create();
     const token = localStorage.getItem("token");
     axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
-    axiosInstance.defaults.baseURL = import.meta.env.PROD ? "https://<change_this>" : "http://localhost:5010/"
+    axiosInstance.defaults.baseURL = import.meta.env.PROD ? "https://<change_this>" : "http://127.0.0.1:8000"
 
     axiosInstance.interceptors.response.use(
         (response) => response,
