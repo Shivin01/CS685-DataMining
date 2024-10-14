@@ -1,7 +1,7 @@
 import {Button} from "~/components/ui/button"
 import {Link, Outlet} from "react-router-dom";
-import {Moon, Package2, Settings, Sun} from "lucide-react";
-import {Tooltip, TooltipContent, TooltipTrigger} from "~/components/ui/tooltip.tsx";
+import {Moon, Package2, LogOut, Sun} from "lucide-react";
+import {Tooltip, TooltipTrigger} from "~/components/ui/tooltip.tsx";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -9,10 +9,13 @@ import {
     DropdownMenuTrigger
 } from "~/components/ui/dropdown-menu.tsx";
 import {useTheme} from "~/provider/theme.tsx";
+import {useAuth} from "~/Context/useAuth.tsx";
 
 
 const Sidebar = () => {
     const {setTheme} = useTheme()
+    const {logout} = useAuth();
+
     return (
         <>
             <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
@@ -22,7 +25,7 @@ const Sidebar = () => {
                         className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
                     >
                         <Package2 className="h-4 w-4 transition-all group-hover:scale-110"/>
-                        <span className="sr-only">Tourist Inc</span>
+                        <span className="sr-only">Detecting DeepFake</span>
                     </Link>
                 </nav>
                 <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-4">
@@ -50,21 +53,20 @@ const Sidebar = () => {
                     </DropdownMenu>
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Link
-                                to="#"
-                                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                            <button type="button"
+                                    onClick={logout}
                             >
-                                <Settings className="h-5 w-5"/>
-                                <span className="sr-only">Settings</span>
-                            </Link>
-                        </TooltipTrigger>
-                        <TooltipContent side="right">Settings</TooltipContent>
-                    </Tooltip>
-                </nav>
-            </aside>
-            <Outlet/>
-        </>
-    );
+                                <LogOut className="h-5 w-5"/>
+                            </button>
+                    </TooltipTrigger>
+                </Tooltip>
+
+            </nav>
+        </aside>
+    <Outlet/>
+</>
+)
+    ;
 
 }
 

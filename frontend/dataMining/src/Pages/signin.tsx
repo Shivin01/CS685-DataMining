@@ -56,13 +56,13 @@ export default function SignIn() {
     }, [error, isError, setError])
 
     const onSubmit = async (data: FormValues) => {
-        console.log('data', data);
+        // console.log('data', data);
         mutate(data)
     }
 
     return (
         <div className="grid place-items-center h-screen">
-            <Card className="max-w-sm mx-auto">
+            <Card className="max-w-sm mx-auto bg-white text-black">
                 <CardHeader>
                     <CardTitle>Sign In</CardTitle>
                     <CardDescription>Enter your credentials to access your account.</CardDescription>

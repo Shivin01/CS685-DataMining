@@ -1,4 +1,25 @@
 services:
+  frontend:
+    image: dataminingfe
+    restart: always
+    container_name: frontend
+    ports:
+      - 80:80
+  backend:
+    build:
+      dockerfile: Dockerfile_local_M3
+    restart: always
+    container_name: backend
+    environment:
+      PG_DB_NAME: 'deepfake_db'
+      PG_DB_PASSWORD: 'postgres'
+      PG_DB_USER: 'postgres'
+      PG_DB_HOST: 'db'
+      PG_DB_PORT: '5432'
+    volumes:
+      - ./:/deepfake/
+    ports:
+      - 8000:8000
   db:
     image: postgres
     restart: always

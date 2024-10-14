@@ -6,6 +6,7 @@ import {UserProfileToken} from "~/Models/User.ts";
 
 export const fetchVideo = () => {
     const axios = getAxiosInstance()
+    console.log("axios" ,axios.defaults.baseURL);
     return axios.get<Video>('/videos/get-next-video');
 }
 

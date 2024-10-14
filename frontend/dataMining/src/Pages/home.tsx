@@ -10,6 +10,7 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "~/compo
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {fetchVideo, saveVideoResponse} from "~/Services/videos.tsx";
 import {toast} from "react-toastify";
+import { Progress } from "~/components/ui/progress"
 
 const formSchema = z.object({
     is_real: z.boolean({
@@ -20,6 +21,11 @@ const formSchema = z.object({
     reason: z.string().min(1, "Reason is required").max(500, "Reason must not exceed 500 characters"),
 });
 
+type FormSchemaType = {
+    is_real: boolean,
+    reason: string,
+}
+
 type FormValues = {
     video_id: string;
     is_real: boolean,
@@ -28,16 +34,16 @@ type FormValues = {
 }
 
 const HomePage = () => {
-
-
     const {
         data,
         isFetching,
+        error,
+        isError
     } = useQuery({
         queryKey: ['video'],
         queryFn: () => {
             return fetchVideo()
-        }
+        },
     })
 
     const {
@@ -50,16 +56,23 @@ const HomePage = () => {
     })
 
     useEffect(() => {
+        if (isError) {
+            toast.error('Error occurred while fetching videos. Please contact the admin');
+            console.log(error);
+            // window.location.reload();
+        }
+    }, [isError]);
+
+
+    useEffect(() => {
         if (isSuccess) {
             toast.success('Success');
             window.location.reload();
         } else {
-            // toast.error('Error Occurred');
             form.reset();
         }
     }, [isSuccess]);
 
-    console.log('data', data);
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -68,9 +81,9 @@ const HomePage = () => {
         },
     });
 
-    const onSubmit = (Submitdata: FormValues) => {
+    const onSubmit = (SubmitData: FormSchemaType) => {
         if (data?.data) {
-            mutate({...Submitdata, "video_id": data.data.video_id});
+            mutate({...SubmitData, "video_id": data.data.video_id});
         } else {
             toast.error('Error');
             form.reset();
@@ -78,13 +91,17 @@ const HomePage = () => {
     };
 
 
-    if (isFetching && !data) {
-        return <div>Loading....</div>
+    if (isFetching) {
+        const seconds = new Date().getTime() / 1000;
+        return (<div className="grid place-items-center">
+            <h1> Loading videos...</h1>
+            <Progress value={seconds} />
+        </div>);
     }
 
     return data ? (
         <div className="grid place-items-center">
-            <Card className="max-w-screen-lg mx-auto">
+            <Card className="max-w-screen-lg mx-auto bg-white text-black">
                 <CardHeader>
                     <CardTitle>Additional Info</CardTitle>
                     <CardDescription>Enter your Additional Information.</CardDescription>
@@ -161,7 +178,9 @@ const HomePage = () => {
             </Card>
         </div>
 
-    ) : null;
+    ) : (<div className="grid place-items-center">
+        <h1> Failed to load videos. Please contact the admin.</h1>
+    </div>);
 };
 
 export default HomePage;

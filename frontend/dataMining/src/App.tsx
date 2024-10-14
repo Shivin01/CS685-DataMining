@@ -2,7 +2,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import SignIn from "~/Pages/signin.tsx";
 import Signup from "~/Pages/signup.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import PrivateRoute from "~/Components/private-routes.tsx";
+import PrivateRoute from "~/components/private-routes.tsx";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
 import {UserProvider} from "~/Context/useAuth.tsx";
@@ -48,7 +48,8 @@ const router = createBrowserRouter([
         element: <NoMatch/>,
     },
 ], {
-    basename: import.meta.env.PROD ? "/" : "/"
+    // basename: import.meta.env.PROD ? "/" : "/"
+    basename: "/"
 });
 
 export default function App() {
@@ -70,6 +71,5 @@ export default function App() {
 }
 
 function Layout() {
-    // const {logout, user} = useAuth();
-    return (<Sidebar/>);
+    return <Sidebar />
 }

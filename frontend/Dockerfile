@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM --platform=linux/amd64 python:3.12-slim
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -18,5 +18,3 @@ COPY . .
 EXPOSE 8000
 
 CMD ["bash", "run_server.sh"]
-#ENTRYPOINT ["tail"]
-#CMD ["-f","/dev/null"]

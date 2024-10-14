@@ -1,8 +1,7 @@
 import {useForm} from "react-hook-form"
-// import {Link, useNavigate} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "~/Context/useAuth.tsx";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {registerAPI} from "~/Services/AuthService.tsx";
 import {toast} from "react-toastify";
@@ -18,7 +17,8 @@ type FormValues = {
     password: string,
     age: number,
     department: string,
-    branch: string
+    branch: string,
+    confirmPassword: string
 }
 
 // Dictionary for department options
@@ -85,11 +85,18 @@ const branch: { [key: string]: string } = {
 
 export default function Signup() {
     const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        password: "",
+        confirmPassword: "",
+    });
     const form = useForm<FormValues>()
     const {
         register,
-        setError
+        setError,
+        clearErrors,
+        formState: {isValid}
     } = form
+
     const {registerUser} = useAuth();
 
     const {
@@ -101,18 +108,28 @@ export default function Signup() {
             return registerAPI(data.email, data.password, data.age, data.department, data.branch)
         },
         onError: (err) => {
-            toast.error("Error Occurred")
-            console.log(err)
-            setError("password", {
-                message: "Wrong password"
-            });
-
+            console.log(err);
+            toast.error("Error Occurred please contact your Admin.");
         }
     })
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setFormData({...formData, [name]: value});
+        // Check if passwords match dynamically while typing
+        if (name === "confirmPassword" || name === "password") {
+            if (formData.password !== value && name === "confirmPassword") {
+                setError("password", {message: "Passwords do not match!"});
+            } else if (formData.confirmPassword !== value && name === "password") {
+                setError("password", {message: "Passwords do not match!"});
+            } else {
+                clearErrors("password"); // Clear error if passwords match
+            }
+        }
+    };
+
 
     const onSubmit = async (data: FormValues) => {
-        console.log(data, 'data')
         mutate(data)
     }
 
@@ -126,7 +143,7 @@ export default function Signup() {
 
     return (
         <div className="grid place-items-center h-screen">
-            <Card className="max-w- mx-auto">
+            <Card className="max-w- mx-auto bg-white text-black">
                 <CardHeader>
                     <CardTitle>Sign In</CardTitle>
                     <CardDescription>Enter your credentials to access your account.</CardDescription>
@@ -173,6 +190,28 @@ export default function Signup() {
                                                            message: "Password is required."
                                                        }
                                                    })}
+                                                   onChange={handleInputChange}
+                                            />
+                                        </FormControl>
+                                        <FormMessage/>
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="confirmPassword"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Confirm Password</FormLabel>
+                                        <FormControl>
+                                            <Input type="password" {...field}
+                                                   {...register("confirmPassword", {
+                                                       required: {
+                                                           value: true,
+                                                           message: "Confirm Password is required."
+                                                       }
+                                                   })}
+                                                   onChange={handleInputChange}
                                             />
                                         </FormControl>
                                         <FormMessage/>
@@ -187,7 +226,14 @@ export default function Signup() {
                                         <FormLabel>Age</FormLabel>
                                         <FormControl>
                                             <Input type="number" {...field}
-                                                   onChange={(e) => field.onChange(parseInt(e.target.value))}/>
+                                                   {...register("age", {
+                                                       required: {
+                                                           value: true,
+                                                           message: "Please enter your Age."
+                                                       }
+                                                   })}
+                                                   onChange={(e) => field.onChange(parseInt(e.target.value))}
+                                            />
                                         </FormControl>
                                         <FormMessage/>
                                     </FormItem>
@@ -205,7 +251,14 @@ export default function Signup() {
                                                     <SelectValue placeholder="Select a department"/>
                                                 </SelectTrigger>
                                             </FormControl>
-                                            <SelectContent>
+                                            <SelectContent
+                                                {...register("department", {
+                                                    required: {
+                                                        value: true,
+                                                        message: "Please enter your Department."
+                                                    }
+                                                })}
+                                            >
                                                 {Object.entries(department).map(([key, value]) => (
                                                     <SelectItem key={key} value={key}>{value}</SelectItem>
                                                 ))}
@@ -227,7 +280,14 @@ export default function Signup() {
                                                     <SelectValue placeholder="Select a program"/>
                                                 </SelectTrigger>
                                             </FormControl>
-                                            <SelectContent>
+                                            <SelectContent
+                                                {...register("branch", {
+                                                    required: {
+                                                        value: true,
+                                                        message: "Please enter your Branch."
+                                                    }
+                                                })}
+                                            >
                                                 {Object.entries(branch).map(([key, value]) => (
                                                     <SelectItem key={key} value={key}>{value}</SelectItem>
                                                 ))}
@@ -237,7 +297,12 @@ export default function Signup() {
                                     </FormItem>
                                 )}
                             />
-                            <Button type="submit">Sign Up</Button>
+                            <Button
+                                type="submit"
+                                disabled={!isValid}
+                            >
+                                Sign Up
+                            </Button>
                         </form>
                     </Form>
                 </CardContent>

@@ -5,8 +5,7 @@ import {getAxiosInstance} from "~/axiosInstance.ts";
 
 const axios = getAxiosInstance()
 
-type dataType = {
-    user: string
+export type dataType = {
     email: string
     id: number
     access_token: string
@@ -49,7 +48,7 @@ export const UserProvider = ({children}: Props) => {
     const localStorageToken = (data: dataType) => {
         localStorage.setItem("token", data.access_token)
         const userObj = {
-            email: data.user,
+            email: data.email,
             id: data.id.toString()
         }
         localStorage.setItem("user", JSON.stringify(userObj));

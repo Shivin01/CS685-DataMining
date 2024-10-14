@@ -5,7 +5,6 @@ export type UserProfileToken = {
     age: number,
     department: string,
     branch: string
-
 }
 
 export type UserProfile = {
