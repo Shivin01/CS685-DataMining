@@ -1,0 +1,37 @@
+services:
+  frontend:
+    image: shivinagarwal/dataminingfe
+    restart: always
+    container_name: frontend
+    volumes:
+      - ./videos:/deepfake/videos
+    ports:
+      - 80:80
+  backend:
+    image: shivinagarwal/dataminingbe
+    restart: always
+    container_name: backend
+    environment:
+      PG_DB_NAME: 'deepfake_db'
+      PG_DB_PASSWORD: 'postgres'
+      PG_DB_USER: 'postgres'
+      PG_DB_HOST: 'db'
+      PG_DB_PORT: '5432'
+    volumes:
+      - ./videos:/deepfake/videos
+    ports:
+      - 8000:8000
+  db:
+    image: postgres
+    restart: always
+    container_name: postgres
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdataDataMiningProject:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  pgdataDataMiningProject:

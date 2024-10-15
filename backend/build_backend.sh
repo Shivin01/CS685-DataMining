@@ -1,0 +1,1 @@
+DOCKER_DEFAULT_PLATFORM=linux/amd64 docker build -t shivinagarwal/dataminingbe . && docker push shivinagarwal/dataminingbe:latest
