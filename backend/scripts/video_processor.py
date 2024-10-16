@@ -3,7 +3,7 @@ import logging
 import os
 import zipfile
 from datetime import datetime
-
+#
 from sqlalchemy import (
     TIMESTAMP,
     Boolean,
@@ -14,13 +14,14 @@ from sqlalchemy import (
     create_engine,
     func,
 )
+
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # Database connection details
 DB_USER = "postgres"
 DB_PASS = "postgres"
-DB_URI = "0.0.0.0"
+DB_URI = "postgres"
 DB_NAME = "deepfake_db"
 
 # Set up logging
@@ -47,7 +48,7 @@ class Video(Base):
 
 
 # Create the video table if it doesn't exist
-# Base.metadata.create_all(engine)
+Base.metadata.create_all(engine)
 
 
 def extract_zip(zip_path):

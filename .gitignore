@@ -1,3 +1,5 @@
 .idea
 .DS_Store
 frontend/.DS_Store
+selected_videos/
+backend/scripts/selected_videos.zip

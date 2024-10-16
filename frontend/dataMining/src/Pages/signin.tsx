@@ -56,7 +56,6 @@ export default function SignIn() {
     }, [error, isError, setError])
 
     const onSubmit = async (data: FormValues) => {
-        // console.log('data', data);
         mutate(data)
     }
 

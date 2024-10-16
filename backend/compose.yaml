@@ -3,6 +3,8 @@ services:
     image: shivinagarwal/dataminingfe
     restart: always
     container_name: frontend
+    volumes:
+      - ./scripts/selected_videos:/var/www/html/videos
     ports:
       - 80:80
   backend:
@@ -17,7 +19,7 @@ services:
       PG_DB_HOST: 'db'
       PG_DB_PORT: '5432'
     volumes:
-      - ./:/deepfake/
+      - ./scripts/selected_videos:/deepfake/scripts/selected_videos
     ports:
       - 8000:8000
   db:

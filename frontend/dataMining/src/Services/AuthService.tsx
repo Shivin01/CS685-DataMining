@@ -11,7 +11,6 @@ export const loginAPI = (email: string, password: string) => {
 
 export const registerAPI = (email: string, password: string, age: number, department: string, branch: string) => {
     const axios = getAxiosInstance()
-    console.log(axios.defaults.baseURL);
     return axios.post<UserProfileToken>("/auth/signup", {
         email: email,
         password: password,
