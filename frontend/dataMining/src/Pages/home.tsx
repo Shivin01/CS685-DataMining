@@ -101,6 +101,7 @@ const HomePage = () => {
 
     return data ? (
         <div className="grid place-items-center">
+            <br />
             <Card className="max-w-screen-lg mx-auto bg-white text-black">
                 <CardHeader>
                     <CardTitle>Additional Info</CardTitle>
@@ -114,7 +115,6 @@ const HomePage = () => {
                             <video
                                 src={`/videos/${data.data.video_title}`}
                                 controls
-                                // alt={`Video ${videoId}`}
                                 className="max-w max-w-lg mx-auto mb-4 h-1/2"
                             />
                         </div>

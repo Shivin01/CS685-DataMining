@@ -40,15 +40,10 @@ const router = createBrowserRouter([
         element: <Signup/>
     },
     {
-        path: "/",
-        element: <Home/>
-    },
-    {
         path: "*",
         element: <NoMatch/>,
     },
 ], {
-    // basename: import.meta.env.PROD ? "/" : "/"
     basename: "/"
 });
 

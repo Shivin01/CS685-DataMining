@@ -21,4 +21,7 @@ scripts/selected_videos
 scripts/missing_files.log
 t.py
 
+dist/
+node_modules/
+
 .DS_Store
