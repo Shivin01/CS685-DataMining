@@ -1,8 +1,12 @@
 # CS-685: Data Mining Project (IIT Kanpur) (2024 odd Semester)
 
-### Note: This is a Private Repo
+## Author:
+- Shivin Agarwal (shivin.agarwal15@gmail.com, shivin23@iitk.ac.in)
+- Yuvraj Raghuvanshi
+- Sunil Kumar
 
-### Backend folder is for all backend related items for our portal to collect data.
-### Frontend folder is for all frontend related items for our portal to collect data.
+# How to run
 
-### This is a work in progress project.
+```sh
+docker compose up
+```
