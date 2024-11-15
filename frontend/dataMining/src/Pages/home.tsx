@@ -132,12 +132,12 @@ const HomePage = () => {
                                                         // Convert the string value to a boolean
                                                         field.onChange(value === "true"); // true if 'real', false if 'fake'
                                                     }}
-                                                    defaultValue={'true'}
+                                                    defaultValue={"true"}
                                                     className="flex flex-col space-y-1"
                                                 >
                                                     <FormItem className="flex items-center space-x-3 space-y-0">
                                                         <FormControl>
-                                                            <RadioGroupItem value="real"/>
+                                                            <RadioGroupItem value="true"/>
                                                         </FormControl>
                                                         <FormLabel className="font-normal">
                                                             Real
@@ -145,7 +145,7 @@ const HomePage = () => {
                                                     </FormItem>
                                                     <FormItem className="flex items-center space-x-3 space-y-0">
                                                         <FormControl>
-                                                            <RadioGroupItem value="fake"/>
+                                                            <RadioGroupItem value="false"/>
                                                         </FormControl>
                                                         <FormLabel className="font-normal">
                                                             Fake

@@ -20,6 +20,6 @@ scripts/dfdc_train_part_0
 scripts/selected_videos
 scripts/missing_files.log
 scripts/selected_videos.zip
-t.py
+
 
 .DS_Store
