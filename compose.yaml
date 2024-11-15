@@ -1,13 +1,14 @@
 services:
   frontend:
-    image: dataminingfe
+    build:
+      dockerfile: ./frontend/Dockerfile
     restart: always
     container_name: frontend
     ports:
       - 80:80
   backend:
     build:
-      dockerfile: Dockerfile_local_M3
+      dockerfile: ./backend/Dockerfile
     restart: always
     container_name: backend
     environment:

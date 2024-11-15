@@ -18,12 +18,8 @@ def get_next_video(
     # Get the ID of the last video responded to by this user
 
     user_responses = db.query(UserResponse.video_id).filter(UserResponse.user_id == user.user_id).all()
-    print('user_responses', user_responses)
     responded_video_ids = [response.video_id for response in user_responses]
-    print(responded_video_ids, 'responded_video_ids')
-
     available_videos = db.query(Video).filter(Video.video_id.notin_(responded_video_ids)).all()
-    print(available_videos, 'available_videos')
 
     if not available_videos:
         raise HTTPException(status_code=404, detail="No available videos for this user.")
@@ -65,6 +61,7 @@ def submit_response(
             status_code=400, detail="Response already submitted for this video"
         )
 
+    print(response.is_real)
     # Save the new response to the database
     new_response = UserResponse(
         user_id=user.user_id,

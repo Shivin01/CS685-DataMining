@@ -19,6 +19,7 @@ Dockerfile_local_M3
 scripts/dfdc_train_part_0
 scripts/selected_videos
 scripts/missing_files.log
-t.py
+scripts/selected_videos.zip
+
 
 .DS_Store

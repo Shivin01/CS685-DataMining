@@ -164,6 +164,6 @@ cython_debug/
 scripts/dfdc_train_part_0
 scripts/selected_videos
 scripts/missing_files.log
-t.py
+
 
 .DS_Store
